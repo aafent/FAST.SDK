@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>FAST Minimal SDK</Title>
+    <Description>The FAST SDK is the organization's unified software development toolkit. It provides a collection of pre-built functions, helpers, and common patterns for shared tasks across all our software projects. Its goal is to increase code quality and readability while significantly reducing development time.</Description>
+    <Copyright>GCS EOOD</Copyright>
+  </PropertyGroup>
+
+</Project>
