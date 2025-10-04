@@ -6,27 +6,62 @@ namespace FAST.Strings
 {
     public class stringReplacer : variablesContainer
     {
-        public stringReplacer()
+
+        #region (+) Constructors
+
+        /// <summary>
+        /// No arguments constructor
+        /// </summary>
+        public stringReplacer() : base()
         {
         }
 
-        //(v) add 13/1/2020
+        /// <summary>
+        /// Constructor taking variables from another container
+        /// add 13/1/2020
+        /// </summary>
+        /// <param name="copyFrom"></param>
         public stringReplacer(variablesContainer copyFrom) : this()
         {
             copyFrom.copyVariablesTo(this);
         }
 
-        //(v) add 13/1/2020
+        /// <summary>
+        /// Constructor taking variables from another string replacer
+        /// add 13/1/2020
+        /// </summary>
+        /// <param name="copyFrom"></param>
         public stringReplacer(stringReplacer copyFrom) : this()
         {
             copyFrom.copyVariablesTo(this);
         }
 
-        public stringReplacer(string template)
+        /// <summary>
+        /// Construct by taking the string template
+        /// </summary>
+        /// <param name="template"></param>
+        public stringReplacer(string template) :base()
         {
             setTemplate(template);
         }
 
+        /// <summary>
+        /// Construct by copying variables from a container 
+        /// </summary>
+        /// <param name="vars"></param>
+        public stringReplacer(InamedVariablesContainer vars) : base(vars)
+        {
+        }
+
+        /// <summary>
+        /// Construct by using a key value pair of strings as name and value 
+        /// </summary>
+        /// <param name="variables">Enumerable key value pair of strings</param>
+        public stringReplacer(IEnumerable<FastKeyValuePair<string, string>> variables) : base(variables)
+        {
+        }
+
+        #endregion (+) Constructors
 
         [XmlArray("variablesNeedQuotes"), XmlArrayItem("var")]
         public List<string> variablesNeedQuotes = null;
