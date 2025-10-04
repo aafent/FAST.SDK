@@ -8,8 +8,18 @@
     <Description>The FAST SDK is the organization's unified software development toolkit. It provides a collection of pre-built functions, helpers, and common patterns for shared tasks across all our software projects. Its goal is to increase code quality and readability while significantly reducing development time.</Description>
     <Copyright>Global Cloud Services EOOD</Copyright>
     <RepositoryUrl>https://github.com/aafent/FAST.SDK</RepositoryUrl>
-    <PackageOutputPath>.\Packages</PackageOutputPath>
+    <PackageId>FAST.MinimalSDK</PackageId>
+	<PackageOutputPath>.\Packages</PackageOutputPath>
     <Version>1.0.1</Version>
+	<Authors>GCS</Authors>
   </PropertyGroup>
+
+<ItemGroup>
+	<None Update="README.MD">
+		<PackagePath>\</PackagePath>
+		<Pack>True</Pack>
+	</None>
+</ItemGroup>
+
 
 </Project>
