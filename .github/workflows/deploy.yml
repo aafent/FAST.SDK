@@ -30,7 +30,7 @@ jobs:
         run: dotnet pack FAST.MinimalSDK/FAST.MinimalSDK.csproj --configuration Release --no-build --output ./nuget 
 
       - name: Publish package to NuGet.org
-        run: dotnet nuget push ./nuget/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}       
+        run: dotnet nuget push ./nuget/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_API_KEY}} --api-key ${{ secrets.NUGET_API_KEY }}       
 
 
         
