@@ -1,4 +1,4 @@
-name: Publish NuGet Package
+name: Publish FAST.MinimalSDK as NuGet Package
 
 on:
   push:
@@ -19,16 +19,17 @@ jobs:
           dotnet-version:
             8.0.x
             9.0.x
-
-
+            
       - name: Restore dependencies
         run: dotnet restore FAST.MinimalSDK/FAST.MinimalSDK.csproj
 
       - name: Build project
-        run: dotnet build FAST.MinimalSDK/FAST.MinimalSDK.csproj --configuration Release --no-restore
+        run: dotnet build FAST.MinimalSDK/FAST.MinimalSDK.csproj --configuration Release --no-restore 
 
       - name: Pack NuGet package
-        run: dotnet pack FAST.MinimalSDK/FAST.MinimalSDK.csproj --configuration Release --no-build --output ./nuget
+        run: dotnet pack FAST.MinimalSDK/FAST.MinimalSDK.csproj --configuration Release --no-build --output ./nuget 
 
       - name: Publish package to NuGet.org
-        run: dotnet nuget push ./nuget/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./nuget/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json 
+    
+
