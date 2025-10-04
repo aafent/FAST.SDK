@@ -9,6 +9,7 @@
     <Copyright>Global Cloud Services EOOD</Copyright>
     <RepositoryUrl>https://github.com/aafent/FAST.SDK</RepositoryUrl>
     <PackageOutputPath>.\Packages</PackageOutputPath>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
