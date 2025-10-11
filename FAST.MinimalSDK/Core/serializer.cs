@@ -21,6 +21,9 @@ using System.Web.Script.Serialization;
 
 namespace FAST.Core
 {
+    /// <summary>
+    /// Base serializer class to handle XML and JSON serialization and deserialization
+    /// </summary>
     public class baseSerializer
     {
         public bool newtonsoftJson = false;
@@ -158,41 +161,41 @@ namespace FAST.Core
             bindFastGlobalsFrom(globals);
         }
 
-        public void serialize(T objectToSerialize, Enum file, string contexDescription)
+        public void serialize(T objectToSerialize, Enum file, string contextDescription)
         {
-            serialize(objectToSerialize, file, fastGlobals.defaultFileVersion, contexDescription);
+            serialize(objectToSerialize, file, fastGlobals.defaultFileVersion, contextDescription);
         }
-        public void serialize(T objectToSerialize, Enum file, Enum version, string contexDescription)
+        public void serialize(T objectToSerialize, Enum file, Enum version, string contextDescription)
         {
-            this.serialize(objectToSerialize, objectToSerialize.GetType(), fastGlobals.filePath(file, version), contexDescription);
+            this.serialize(objectToSerialize, objectToSerialize.GetType(), fastGlobals.filePath(file, version), contextDescription);
         }
-        public void serialize(T objectToSerialize, Enum location, string fileName, string contexDescription)
+        public void serialize(T objectToSerialize, Enum location, string fileName, string contextDescription)
         {
-            this.serialize(objectToSerialize, objectToSerialize.GetType(), fastGlobals.filePath(location, fastGlobals.defaultFileVersion, fileName, ""), contexDescription);
+            this.serialize(objectToSerialize, objectToSerialize.GetType(), fastGlobals.filePath(location, fastGlobals.defaultFileVersion, fileName, ""), contextDescription);
         }
-        public void serialize(T objectToSerialize, string fullPathName, string contexDescription)
+        public void serialize(T objectToSerialize, string fullPathName, string contextDescription)
         {
-            this.serialize(objectToSerialize, objectToSerialize.GetType(), fullPathName, contexDescription);
+            this.serialize(objectToSerialize, objectToSerialize.GetType(), fullPathName, contextDescription);
         }
 
-        public T deserialize(Enum file, string contexDescription)
+        public T deserialize(Enum file, string contextDescription)
         {
-            return deserialize(file, fastGlobals.defaultFileVersion, contexDescription);
+            return deserialize(file, fastGlobals.defaultFileVersion, contextDescription);
         }
-        public T deserialize(Enum file, Enum version, string contexDescription)
+        public T deserialize(Enum file, Enum version, string contextDescription)
         {
             Type typeParameterType = typeof(T);
-            return (T)this.deserialize(typeParameterType, fastGlobals.filePath(file, version), contexDescription);
+            return (T)this.deserialize(typeParameterType, fastGlobals.filePath(file, version), contextDescription);
         }
-        public T deserialize(Enum location, string fileName, string contexDescription)
+        public T deserialize(Enum location, string fileName, string contextDescription)
         {
             Type typeParameterType = typeof(T);
-            return (T)this.deserialize(typeParameterType, fastGlobals.filePath(location,fastGlobals.defaultFileVersion, fileName, ""), contexDescription);
+            return (T)this.deserialize(typeParameterType, fastGlobals.filePath(location,fastGlobals.defaultFileVersion, fileName, ""), contextDescription);
         }
-        public T deserialize(string fullpathName, string contexDescription)
+        public T deserialize(string fullpathName, string contextDescription)
         {
             Type typeParameterType = typeof(T);
-            return (T)this.deserialize(typeParameterType, fullpathName, contexDescription);
+            return (T)this.deserialize(typeParameterType, fullpathName, contextDescription);
         }
 
         public T jsonDeserialize(string json)
@@ -220,14 +223,14 @@ namespace FAST.Core
             otherObject.bindFastGlobalsFrom(this.fastGlobals);
         }
 
-        public static void serializeToFile(T obj, string filePath, string contexDescription)
+        public static void serializeToFile(T obj, string filePath, string contextDescription)
         {
-            new baseSerializer().serialize(obj, typeof(T), filePath, contexDescription);
+            new baseSerializer().serialize(obj, typeof(T), filePath, contextDescription);
         }
 
-        public static T deserializeFromFile(string filePath, string contexDescription)
+        public static T deserializeFromFile(string filePath, string contextDescription)
         {
-            return (T)new baseSerializer().deserialize(typeof(T), filePath, contexDescription);
+            return (T)new baseSerializer().deserialize(typeof(T), filePath, contextDescription);
         }
 
 

@@ -6,9 +6,17 @@ using FAST.Logging;
 
 namespace FAST.Core
 {
+
+    /// <summary>
+    /// Reflection Helper
+    /// </summary>
     public class reflectionHelper
     {
         private static List<Type> _simpleTypes = null;
+
+        /// <summary>
+        /// A collection with the simple types
+        /// </summary>
         public static List<Type> simpleTypes
         {
             get
@@ -38,11 +46,20 @@ namespace FAST.Core
         }
 
         //public enum propertiesChangability { any = 0, readable = 1, writable = 2 }
+
+        /// <summary>
+        /// Changeability of properties
+        /// </summary>
         public enum propertiesChangeability { any = 0, readable = 1, writable = 2 }
- 
+
 
         #region (+) Property(ies), Field(s) & Members
 
+        /// <summary>
+        /// Get all public properties of a type
+        /// </summary>
+        /// <param name="type">The type</param>
+        /// <returns>Array of properties</returns>
         public static PropertyInfo[] getPublicProperties(Type type )
         {
             return getProperties(type, propertiesChangeability.any,
@@ -50,6 +67,15 @@ namespace FAST.Core
                                         |   BindingFlags.Public
                                         |   BindingFlags.Instance);
         }
+
+        /// <summary>
+        /// Get properties of a type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="changeability"></param>
+        /// <param name="bindingFlags"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static PropertyInfo[] getProperties(Type type, propertiesChangeability changeability, BindingFlags bindingFlags)
         {
             if (type.IsInterface)
@@ -98,6 +124,14 @@ namespace FAST.Core
             }
 
         }
+
+        /// <summary>
+        /// Get fields and properties of a type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="changeability"></param>
+        /// <param name="bindingFlags"></param>
+        /// <returns></returns>
         public static MemberInfo[] getFieldsAndProperties(Type type, propertiesChangeability changeability, BindingFlags bindingFlags)
         {
             MemberInfo[] fields = type.GetFields(bindingFlags);
@@ -445,6 +479,14 @@ namespace FAST.Core
         #endregion (+) Copy Values
 
         #region (+) Replace values
+
+        /// <summary>
+        /// Replace empty strings with a given value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="replacement"></param>
+        /// <param name="applyTrim"></param>
         public static void replaceEmptyStrings<T>(List<T> list, string replacement, bool applyTrim=false)
         {
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -494,6 +536,15 @@ namespace FAST.Core
             }
 
         }
+
+
+        /// <summary>
+        /// Replace empty strings with a given value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instanceToReplace"></param>
+        /// <param name="replacement"></param>
+        /// <param name="applyTrim"></param>
         public static void replaceEmptyStrings<T>(T instanceToReplace, string replacement, bool applyTrim = false)
         {
             List<T> list = new List<T>();
@@ -502,6 +553,14 @@ namespace FAST.Core
             return;
         }
 
+
+        /// <summary>
+        /// Replace a string with another string in all string properties and fields
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instanceToReplace"></param>
+        /// <param name="search"></param>
+        /// <param name="replacement"></param>
         public static void replaceString<T>(T instanceToReplace, string search, string replacement)
         {
             List<T> list = new List<T>();
@@ -509,6 +568,14 @@ namespace FAST.Core
             replaceString<T>(list, search, replacement);
             return;
         }
+
+        /// <summary>
+        /// Replace a string with another string in all string properties and fields
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="search"></param>
+        /// <param name="replacement"></param>
         public static void replaceString<T>(List<T> list, string search, string replacement)
         {
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -556,23 +623,53 @@ namespace FAST.Core
         #endregion (+) Replace values
 
         #region (+) is and check methods
+
+        /// <summary>
+        /// Check if a type is a simple type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static bool isSimpleType(Type type)
         {
             return simpleTypes.Contains(type);
 
         }
+
+        /// <summary>
+        /// Check if a property is a collection
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
         public static bool isCollection(PropertyInfo property)
         {
             return property.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) != null;
         }
+
+        /// <summary>
+        /// Check if a field is a collection
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
         public static bool isCollection(FieldInfo field)
         {
             return field.FieldType.GetInterface(typeof(IEnumerable<>).FullName) != null;
         }
+
+        /// <summary>
+        /// Check if a type is a collection
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static bool isCollection(Type type)
         {
             return type.GetInterface(typeof(IEnumerable<>).FullName) != null;
         }
+
+        /// <summary>
+        /// Check if a type is nullable
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static bool isNullable(Type type)
         {
             if (Nullable.GetUnderlyingType(type) != null)
@@ -703,7 +800,14 @@ namespace FAST.Core
             return attrib;
         }
 
-
+        /// <summary>
+        /// Get a value from an attribute of a type
+        /// </summary>
+        /// <typeparam name="TAttribute"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="type"></param>
+        /// <param name="valueSelector"></param>
+        /// <returns></returns>
         public static TValue getAttributeValue<TAttribute, TValue>(
             Type type,
             Func<TAttribute, TValue> valueSelector)
@@ -723,6 +827,13 @@ namespace FAST.Core
         #endregion (+) Attributes
 
         #region (+) instances and types
+
+        /// <summary>
+        /// Get the underlying type of a member
+        /// </summary>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static Type underlyingType(MemberInfo member)
         {
             switch (member.MemberType)
@@ -740,6 +851,11 @@ namespace FAST.Core
             }
         }
 
+        /// <summary>
+        /// Get the name of a type, if it is nullable then return the underlying type name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static string getTypeName(Type type)
         {
             var nullableType = Nullable.GetUnderlyingType(type);
@@ -859,6 +975,11 @@ namespace FAST.Core
         #endregion (+) instances and types
 
 
+        /// <summary>
+        /// Create a datatable from a class
+        /// </summary>
+        /// <param name="dataClass"></param>
+        /// <returns></returns>
         public static DataTable toDataTable(Type dataClass)
         {
             DataTable return_Datatable = new DataTable();

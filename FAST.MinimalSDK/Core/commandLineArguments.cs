@@ -1,9 +1,17 @@
 ﻿namespace FAST.Core
 {
+
+    /// <summary>
+    /// Parse command line arguments into key/value pairs.
+    /// </summary>
     public class commandLineArguments
     {
         private bool bypassArg0 = true;
         private List<string> args;
+
+        /// <summary>
+        /// List of command line arguments.
+        /// </summary>
         public List<string>  commandLineArgumentsList
         {
             get
@@ -11,8 +19,17 @@
                 return args;
             }
         }
+
+        /// <summary>
+        /// Key/Value pairs of command line arguments.
+        /// </summary>
         public variablesContainer values = new();
 
+        /// <summary>
+        /// Parse command line arguments into key/value pairs.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="bypassArgument0"></param>
         public commandLineArguments(string[] args, bool bypassArgument0=true )
         {
             this.args = args.ToList();
@@ -20,6 +37,7 @@
             values.clearVariables();
             parse();
         }
+
 
         private void expandArguments()
         {
@@ -80,8 +98,6 @@
                 }
             }
         }
-
-
 
     }
 }

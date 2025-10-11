@@ -46,9 +46,20 @@ namespace FAST.Core
 		public fastBaseException(string message, Exception innerException): base(message, innerException)
 		{
 		}
-		public fastBaseException(string message, IerrorCarrier errors) : base($"{message} ${errors.errorText}")
+
+        /// <summary>
+        /// Initializes a new instance of the fastBaseException class with a specified
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="errors"></param>
+        public fastBaseException(string message, IerrorCarrier errors) : base($"{message} ${errors.errorText}")
 		{
 		}
+
+        /// <summary>
+        /// Initializes a new instance of the fastBaseException class with a specified
+        /// </summary>
+        /// <param name="errors"></param>
         public fastBaseException(IerrorCarrier errors):base($"{errors.errorText}")
 		{
 		}

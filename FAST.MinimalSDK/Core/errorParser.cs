@@ -11,7 +11,7 @@ namespace FAST.Core
         private elementaryMultiErrorContainer _errorContainer;
 
         /// <summary>
-        /// The underlyining error container, as signle Error container 
+        /// The underlying error container, as single Error container 
         /// </summary>
         public IerrorCarrier singleError
         {
@@ -29,7 +29,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// The underlyining error container, as multi Error container 
+        /// The underlying error container, as multi Error container 
         /// </summary>
         public ImultiErrorCarrier multiError
         {
@@ -58,19 +58,25 @@ namespace FAST.Core
         public string source { get; set; }
 
         /// <summary>
-        /// The stach trace to the error
+        /// The stack trace to the error
         /// </summary>
         public string stackTrace { get; set; }
 
         /// <summary>
-        /// The trace seperator
+        /// The trace separator
         /// </summary>
-        public string traceSeperator = "\n[ {0} ]";
+        public string traceSeparator = "\n[ {0} ]";
+
+        [Obsolete("Use traceSeparator instead")]
+        public string traceSeperator=> traceSeparator;
 
         /// <summary>
-        /// The messages seperator
+        /// The messages separator
         /// </summary>
-        public string messageSeperator = "[ {0} ] ";
+        public string messageSeparator = "[ {0} ] ";
+
+        [Obsolete("Use messageSeparator instead")]
+        public string messageSeperator => messageSeparator;
 
         /// <summary>
         /// A collection with the errors
@@ -146,9 +152,9 @@ namespace FAST.Core
         #region (+) add methods
 
         /// <summary>
-        /// Add an exception to the underlyining errors
+        /// Add an exception to the underlying errors
         /// </summary>
-        /// <param name="ex">The exceptiuon to add</param>
+        /// <param name="ex">The exception to add</param>
         /// <returns>Self</returns>
         public errorParser add(Exception ex)
         {
@@ -159,7 +165,7 @@ namespace FAST.Core
                 this.levels++;
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
-                    if (!string.IsNullOrEmpty(this.message)) this.message += string.Format(messageSeperator,this.levels);
+                    if (!string.IsNullOrEmpty(this.message)) this.message += string.Format(messageSeparator,this.levels);
                     errors.Add(ex.Message);
                     this.message += ex.Message;
                 }
@@ -174,7 +180,7 @@ namespace FAST.Core
 
                 if (!string.IsNullOrEmpty(ex.StackTrace))
                 {
-                    if (!string.IsNullOrEmpty(this.stackTrace)) this.stackTrace += string.Format(traceSeperator, this.levels);
+                    if (!string.IsNullOrEmpty(this.stackTrace)) this.stackTrace += string.Format(traceSeparator, this.levels);
                     this.stackTrace += ex.StackTrace;
                 }
         
@@ -187,7 +193,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Add an error message to the underlyining errors
+        /// Add an error message to the underlying errors
         /// </summary>
         /// <param name="message">The message to add</param>
         /// <returns>Self</returns>
@@ -212,7 +218,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Add multi error carrier to the underlyining errors
+        /// Add multi error carrier to the underlying errors
         /// </summary>
         /// <param name="source"></param>
         /// <returns>Self</returns>
@@ -229,7 +235,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        ///  Add signle error carrier to the underlyining errors
+        ///  Add single error carrier to the underlying errors
         /// </summary>
         /// <param name="source"></param>
         public errorParser add(ImultiErrorCarrier source)
@@ -252,7 +258,6 @@ namespace FAST.Core
         #endregion (+) add methods
 
         #region (+) other methods
-
 
         /// <summary>
         /// Log the error using the fast logger
@@ -277,7 +282,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Convert to a signle error message
+        /// Convert to a single error message
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -286,7 +291,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Check if there is an error in an signle error carrier
+        /// Check if there is an error in an single error carrier
         /// </summary>
         /// <param name="errorCarrier">The error carrier</param>
         /// <returns>Boolean, true if has errors</returns>
@@ -318,7 +323,7 @@ namespace FAST.Core
         #region (+) copy methods
 
         /// <summary>
-        /// Copy underlyining errors to another error carrier destinations 
+        /// Copy underlying errors to another error carrier destinations 
         /// </summary>
         /// <param name="destination">The destination</param>
         public void copyTo(IerrorCarrier destination)
@@ -329,7 +334,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Copy underlyining errors to another multi error carrier destination
+        /// Copy underlying errors to another multi error carrier destination
         /// </summary>
         /// <param name="destination">The destination</param>
         public void copyTo(ImultiErrorCarrier destination)
@@ -344,7 +349,7 @@ namespace FAST.Core
 
         #region (+) static copy methods
         /// <summary>
-        /// Copy erros from a source to a destination 
+        /// Copy errors from a source to a destination 
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="destination">the destination</param>
@@ -358,7 +363,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Copy erros from a source to a destination 
+        /// Copy errors from a source to a destination 
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="destination">the destination</param>
@@ -370,7 +375,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Copy erros from a source to a destination 
+        /// Copy errors from a source to a destination 
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="destination">the destination</param>
@@ -382,7 +387,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Copy erros from a source to a destination 
+        /// Copy errors from a source to a destination 
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="destination">the destination</param>
@@ -402,7 +407,7 @@ namespace FAST.Core
         }
 
         /// <summary>
-        /// Copy erros from a source to a destination 
+        /// Copy errors from a source to a destination 
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="destination">the destination</param>

@@ -64,7 +64,7 @@ namespace FAST.Core
 
 		/// <summary>
 		/// Converts a string to a steam.
-		/// use always with a using statment eg: using(var stream =  streamHelper.streamFromString("xxxx") ){}
+		/// use always with a using statement eg: using(var stream =  streamHelper.streamFromString("xxxx") ){}
 		/// </summary>
 		/// <param name="input">the string to pass to the stream</param>
 		/// <returns></returns>

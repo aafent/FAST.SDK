@@ -2,6 +2,10 @@
 
 namespace FAST.Core
 {
+
+    /// <summary>
+    /// Object Cache helper class
+    /// </summary>
     public class objectCache
     {
         public class cacheContainer

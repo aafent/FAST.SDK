@@ -1,7 +1,14 @@
 ﻿namespace FAST.Core
 {
+    /// <summary>
+    /// Helper class for type operations
+    /// </summary>
     public static class typeHelper
     {
+
+        /// <summary>
+        /// A set of simple types for quick lookup
+        /// </summary>
         private static readonly HashSet<Type> simpleTypes = new HashSet<Type>
         {
             typeof(byte), typeof(sbyte), typeof(short), typeof(ushort), typeof(int),

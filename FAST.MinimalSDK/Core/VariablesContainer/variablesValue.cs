@@ -52,11 +52,21 @@ namespace FAST.Core
             varAndAttr.copyTo(this);
         }
 
+        /// <summary>
+        /// Preprocess the variable name before using it
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         protected virtual string preprocessVariableName(string variable)
         {
             this.wasQuotableType = false;
             return variable.Trim();
         }
+
+        /// <summary>
+        /// Postprocess after setting a variable
+        /// </summary>
+        /// <param name="variable"></param>
         protected virtual void postprocessSet(string variable)
         {
         }
@@ -64,6 +74,12 @@ namespace FAST.Core
 
         #region (+) get numeric
         // (M) DATATYPES POINT
+        /// <summary>
+        /// Get a Byte value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual Byte getByte(string variable)
         {
             string stringValue = getString(variable);
@@ -78,6 +94,13 @@ namespace FAST.Core
                 return value;
             }
         }
+
+        /// <summary>
+        /// Get an Int16 value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual Int16 getInt16(string variable)
         {
             string stringValue = getString(variable);
@@ -92,6 +115,13 @@ namespace FAST.Core
                 return value;
             }
         }
+
+        /// <summary>
+        /// Get an Int32 value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual int getInt(string variable)
         {
             string stringValue = getString(variable);
@@ -107,6 +137,13 @@ namespace FAST.Core
             }
 
         }
+
+        /// <summary>
+        /// Get an Int64 value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual long getLong(string variable)
         {
             string stringValue = getString(variable);
@@ -122,6 +159,13 @@ namespace FAST.Core
             }
 
         }
+
+        /// <summary>
+        /// Get a Decimal value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual decimal getDecimal(string variable)
         {
             string stringValue = getString(variable);
@@ -137,6 +181,13 @@ namespace FAST.Core
             }
 
         }
+
+        /// <summary>
+        /// Get a Double value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual double getDouble(string variable)
         {
             string stringValue = getString(variable);
@@ -155,6 +206,12 @@ namespace FAST.Core
         #endregion (+) get numeric
 
         #region (+) get other types 
+
+        /// <summary>
+        /// Get a string value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         public virtual string getString(string variable)
         {
             variable = preprocessVariableName(variable);
@@ -163,6 +220,12 @@ namespace FAST.Core
             else return value.ToString();
         }
 
+        /// <summary>
+        /// Get a DateTime value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="kind"></param>
+        /// <returns></returns>
         public virtual DateTime? getDateTime(string variable, DateTimeKind kind = DateTimeKind.Local)
         {
             var sValue = this.getString(variable);
@@ -177,6 +240,13 @@ namespace FAST.Core
                 return value;
             }
         }
+
+        /// <summary>
+        /// Get a Boolean value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual bool getBoolean(string variable)
         {
             string stringValue = getString(variable);
@@ -202,6 +272,13 @@ namespace FAST.Core
 
         }
 
+        /// <summary>
+        /// Get a variable as object
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="variable"></param>
+        /// <param name="nullable"></param>
+        /// <returns></returns>
         public object getAsObject(Type type, string variable, bool nullable)
         {
             return variables.getAsObject(type, variable, nullable);
@@ -212,6 +289,11 @@ namespace FAST.Core
 
 
         // DATATYPES
+        /// <summary>
+        /// Set values from a DbParameterCollection
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="setBySourceColumn"></param>
         public void set(DbParameterCollection parameters, bool setBySourceColumn)
         {
             foreach (var parameter in parameters)
@@ -219,6 +301,13 @@ namespace FAST.Core
                 set((DbParameter)parameter, setBySourceColumn);
             }
         }
+
+        /// <summary>
+        /// Set value from a DbParameter
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="setBySourceColumn"></param>
+        /// <exception cref="Exception"></exception>
         public virtual void set(DbParameter parameter, bool setBySourceColumn)
         {
             string variableName = setBySourceColumn ? parameter.SourceColumn : parameter.ParameterName;
@@ -310,6 +399,12 @@ namespace FAST.Core
             }
 
         }
+
+        /// <summary>
+        /// Set values from a IDataRecord
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="fieldSelection"></param>
         public virtual void set(IDataRecord source, Func<string, bool> fieldSelection = null)
         {
             for (int inx = 0; inx < source.FieldCount; inx++)
@@ -329,11 +424,21 @@ namespace FAST.Core
 
 
         // (M) DATATYPES POINT
+        /// <summary>
+        /// Set a variable to null
+        /// </summary>
+        /// <param name="variable"></param>
         public virtual void setNull(string variable)
         {
             set(variable, (string)null);
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a string value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, string value)
         {
             string inputVariable = variable;
@@ -343,22 +448,46 @@ namespace FAST.Core
             wasQuotableType = true;
             postprocessSet(inputVariable);
         }
+
+        /// <summary>
+        /// Set a DateTime value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, DateTime value)
         {
             value = DateTime.SpecifyKind(value, DateTimeKind.Local);
             set(variable, value.ToLocalTime().ToString(this.dateTimeFormat));
             wasQuotableType = true;
         }
+
+        /// <summary>
+        /// Set a Boolean value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, bool value)
         {
             if (value) { set(variable, 1); } else { set(variable, 0); }
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a Decimal value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, decimal value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a nullable Decimal value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, decimal? value)
         {
             if (value == null)
@@ -372,23 +501,44 @@ namespace FAST.Core
             wasQuotableType = false;
         }
         // (!) int = Int32
+        /// <summary>
+        /// Set an Int32 value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, int value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
         // (!) long = Int64
+        /// <summary>
+        /// Set an Int64 value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, long value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a nullable Int32 value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, Int16 value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
 
+        /// <summary>
+        /// Set a nullable Int16 value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, double? value)
         {
             if (value == null)
@@ -401,12 +551,24 @@ namespace FAST.Core
             }
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a Double value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, double value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
 
+        /// <summary>
+        /// Set a nullable Double value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
+        /// <exception cref="Exception"></exception>
         public virtual void setAny(string variable, object value)
         {
             // (M) DATATYPES POINT

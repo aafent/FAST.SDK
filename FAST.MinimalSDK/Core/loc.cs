@@ -1,5 +1,9 @@
 ﻿namespace FAST.Core
 {
+
+    /// <summary>
+    /// Localization helper class
+    /// </summary>
     public class loc
     {
         private static global::System.Resources.ResourceManager RM;

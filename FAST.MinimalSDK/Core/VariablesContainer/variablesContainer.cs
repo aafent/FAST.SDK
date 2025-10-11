@@ -9,17 +9,40 @@ using System.Xml.Serialization;
 
 namespace FAST.Core
 {
+    /// <summary>
+    /// A container for named variables. 
+    /// This class implements IvariablesContainer and InamedVariablesContainer
+    /// It is one of the most used classes in FAST
+    /// </summary>
     [XmlRoot("variables")]
     public class variablesContainer : IvariablesContainer, InamedVariablesContainer
     {
-        protected virtual string openQuote { get; } = "'";
-        protected virtual string closeQuote { get; } = "'";
-        protected virtual string dateTimeFormat { get; } = "yyyy-MM-ddTHH:mm:ss";
-        
 
+        /// <summary>
+        /// The opening quote for string variables
+        /// </summary>
+        protected virtual string openQuote { get; } = "'";
+
+        /// <summary>
+        /// The closing quote for string variables
+        /// </summary>
+        protected virtual string closeQuote { get; } = "'";
+
+        /// <summary>
+        /// The date time format to use when setting or getting DateTime variables
+        /// </summary>
+        protected virtual string dateTimeFormat { get; } = "yyyy-MM-ddTHH:mm:ss";
+
+
+        /// <summary>
+        /// The internal list of variables
+        /// </summary>
         [XmlArray("vars"), XmlArrayItem("pair")]
         public List<stringsPair> variables = new List<stringsPair>();
 
+        /// <summary>
+        /// Indicates if the last set variable was of a quotable type (string, datetime)
+        /// </summary>
         // (v) add 13/1/2020
         [XmlIgnore]
         public bool wasQuotableType { get; set; } = false;
@@ -29,11 +52,19 @@ namespace FAST.Core
          * */
 
         #region (+) Constructors 
+
+        /// <summary>
+        /// Constructor without arguments
+        /// </summary>
         public variablesContainer()
         {
         }
 
         // (v) 22 nov 2019
+        /// <summary>
+        /// Construct by copying variables from another container
+        /// </summary>
+        /// <param name="copyFrom"></param>
         public variablesContainer(variablesContainer copyFrom) : this()
         {
             copyFrom.copyVariablesTo(this);
@@ -66,10 +97,18 @@ namespace FAST.Core
 
         #endregion (+) Constructors 
 
+
+        /// <summary>
+        /// Reset the container by removing all variables
+        /// </summary>
         public virtual void reset()
         {
             variables.Clear();
         }
+
+        /// <summary>
+        /// Clear all variable values
+        /// </summary>
         public virtual void clearVariables()
         {
             foreach (var variable in variables)
@@ -78,11 +117,21 @@ namespace FAST.Core
             }
         }
 
+        /// <summary>
+        /// Preprocess the variable name before using it
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         protected virtual string preprocessVariableName(string variable)
         {
             wasQuotableType = false;
             return variable.Trim();
         }
+
+        /// <summary>
+        /// Postprocess after setting a variable
+        /// </summary>
+        /// <param name="variable"></param>
         protected virtual void postprocessSet(string variable)
         {
         }
@@ -92,6 +141,11 @@ namespace FAST.Core
 
 
         // DATATYPES
+        /// <summary>
+        /// Set multiple parameters from a DbParameterCollection
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="setBySourceColumn"></param>
         public void set(DbParameterCollection parameters, bool setBySourceColumn)
         {
             foreach (var parameter in parameters)
@@ -99,6 +153,13 @@ namespace FAST.Core
                 set((DbParameter)parameter, setBySourceColumn);
             }
         }
+
+        /// <summary>
+        /// Set a single parameter from a DbParameter
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="setBySourceColumn"></param>
+        /// <exception cref="Exception"></exception>
         public virtual void set(DbParameter parameter, bool setBySourceColumn)
         {
             string variableName = setBySourceColumn ? parameter.SourceColumn : parameter.ParameterName;
@@ -190,6 +251,12 @@ namespace FAST.Core
             }
 
         }
+
+        /// <summary>
+        /// Set multiple variables from a data record
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="fieldSelection"></param>
         public virtual void set(IDataRecord source, Func<string, bool> fieldSelection=null)
         {
             for( int inx=0 ; inx<source.FieldCount; inx++ )
@@ -208,11 +275,21 @@ namespace FAST.Core
 
 
         // (M) DATATYPES POINT
+        /// <summary>
+        /// Set a variable to null
+        /// </summary>
+        /// <param name="variable"></param>
         public virtual void setNull(string variable)
         {
             set(variable, (string)null);
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a variable to a string value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, string value)
         {
             string inputVariable = variable;
@@ -229,22 +306,46 @@ namespace FAST.Core
             wasQuotableType = true;
             postprocessSet(inputVariable);
         }
+
+        /// <summary>
+        /// Set a variable to a DateTime value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, DateTime value)
         {
             value=DateTime.SpecifyKind(value, DateTimeKind.Local);
             set(variable, value.ToLocalTime().ToString(this.dateTimeFormat));
             wasQuotableType = true;
         }
+
+        /// <summary>
+        /// Set a variable to a boolean value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, bool value)
         {
             if (value) { set(variable, 1); } else { set(variable, 0); }
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a variable to a byte value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, decimal value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a variable to a nullable decimal value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, decimal? value)
         {
             if (value == null)
@@ -258,23 +359,44 @@ namespace FAST.Core
             wasQuotableType = false;
         }
         // (!) int = Int32
+        /// <summary>
+        /// Set a variable to an int value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, int value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
         // (!) long = Int64
+        /// <summary>
+        /// Set a variable to a long value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, long value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a variable to a nullable int value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, Int16 value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
 
+        /// <summary>
+        /// Set a variable to a nullable int value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, double? value)
         {
             if (value == null)
@@ -287,12 +409,24 @@ namespace FAST.Core
             }
             wasQuotableType = false;
         }
+
+        /// <summary>
+        /// Set a variable to a double value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
         public virtual void set(string variable, double value)
         {
             set(variable, value.ToString(CultureInfo.InvariantCulture));
             wasQuotableType = false;
         }
 
+        /// <summary>
+        /// Set a variable to a byte value
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
+        /// <exception cref="Exception"></exception>
         public virtual void setAny(string variable, object value)
         {
             // (M) DATATYPES POINT
@@ -506,6 +640,12 @@ namespace FAST.Core
         #endregion (+) get numeric
 
         #region (+) get other types 
+
+        /// <summary>
+        /// Get a variable as a string
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         public virtual string getString(string variable)
         {
             variable = preprocessVariableName(variable);
@@ -518,6 +658,13 @@ namespace FAST.Core
                 return string.Empty;
             }
         }
+
+        /// <summary>
+        /// Get a variable as a nullable DateTime
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="kind"></param>
+        /// <returns></returns>
         public virtual DateTime? getDateTime(string variable, DateTimeKind kind = DateTimeKind.Local)
         {
             var sValue = this.getString(variable);
@@ -532,6 +679,13 @@ namespace FAST.Core
                 return value;
             }
         }
+
+        /// <summary>
+        /// Get a variable as a boolean
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual bool getBoolean(string variable)
         {
             string stringValue = getString(variable);
@@ -558,6 +712,14 @@ namespace FAST.Core
         }
         #endregion (+) get other types
 
+        /// <summary>
+        /// Get a variable as an object of the specified type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="variable"></param>
+        /// <param name="nullable"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public virtual object getAsObject(Type type, string variable, bool nullable=false )
         {
             // (M) DATATYPES POINT
@@ -598,6 +760,11 @@ namespace FAST.Core
             }
         }
 
+        /// <summary>
+        /// Check if the input string contains any variable pattern {varname}
+        /// </summary>
+        /// <param name="stringToTest"></param>
+        /// <returns></returns>
         public bool hasAnyVariable(string stringToTest)
         {
             int p1 = stringToTest.IndexOf('{');
@@ -607,6 +774,11 @@ namespace FAST.Core
             return true;
         }
 
+        /// <summary>
+        /// Check if the input string is a variable name
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         public bool isVariable(string variable)
         {
             variable = preprocessVariableName(variable);
@@ -639,14 +811,23 @@ namespace FAST.Core
                 this.set(name, value.ToString() );
             }
         }
- 
 
 
+        /// <summary>
+        /// Get the internal list of string pairs
+        /// </summary>
+        /// <returns></returns>
         public List<stringsPair> stringsPairList()
         {
             return variables;
         }
 
+        /// <summary>
+        /// Get a list of keys from a variable that contains a delimited list of keys
+        /// </summary>
+        /// <param name="keyListVariableName"></param>
+        /// <param name="delimiter"></param>
+        /// <returns></returns>
         public List<string> keyList(string keyListVariableName, string delimiter)
         {
             List<string> keys = new List<string>();
@@ -660,6 +841,10 @@ namespace FAST.Core
             return keys;
         }
 
+        /// <summary>
+        /// Convert the variables container to a json object
+        /// </summary>
+        /// <returns></returns>
         public json toJson()
         {
             return json.toJson(this);

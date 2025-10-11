@@ -110,7 +110,10 @@ namespace FAST.Core
         }
 
 
-
+        /// <summary>
+        /// Find all IPs of the local machine
+        /// </summary>
+        /// <returns></returns>
         public static List<IPAddress> findAllIPs()
         {
             List<IPAddress> ips = new List<IPAddress>();
