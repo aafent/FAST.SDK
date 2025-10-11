@@ -78,7 +78,7 @@ namespace FAST.Core.FileSystem
 
 
     [Obsolete("Use baseFileSystemContextManager instead")]
-    public abstract class baseFileSystemContexManager2 : baseFileSystemContextManager
+    public abstract class baseFileSystemContexManager : baseFileSystemContextManager
     {
 
         [Obsolete("Use contextSearchPattern() instead")]

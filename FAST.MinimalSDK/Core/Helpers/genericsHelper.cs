@@ -2,10 +2,22 @@
 
 namespace FAST.Core
 {
+
+    /// <summary>
+    /// A collection of helper methods for generics
+    /// </summary>
     public static class genericsHelper
     {
+        // (!)     05/08/2022   generics class anyType<T> moved from FAST.Core.genericsHelper to FAST.Types 
 
         // (v) add 12/12/2019
+
+        /// <summary>
+        /// Initialize an array of objects of type T
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="length">The initial Length</param>
+        /// <returns>The initialized array</returns>
         public static T[] initializeArray<T>(int length) where T : new()
         {
             T[] array = new T[length];
@@ -15,8 +27,14 @@ namespace FAST.Core
             }
 
             return array;
-        }    
-        
+        }
+
+        /// <summary>
+        /// Initialize an array of objects of type T with default values
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="length">The initial Length</param>
+        /// <returns>The initialized array</returns>
         public static T[] initializeArrayWithDefault<T>(int length) 
         {
             T[] array = new T[length];
@@ -26,10 +44,14 @@ namespace FAST.Core
             }
 
             return array;
-        }     
+        }
 
-
-        // Return the largest of the values.
+        /// <summary>
+        /// Return the largest of the values.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="values">Array of values</param>
+        /// <returns></returns>
         private static T max<T>(params T[] values) where T : IComparable<T>
         {
             T max = values[0];
@@ -39,6 +61,12 @@ namespace FAST.Core
         }
 
 
+        /// <summary>
+        /// Swap two values of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input1"></param>
+        /// <param name="input2"></param>
         public static void swap<T>(ref T input1, ref T input2)
         {
             T temp = default(T);
@@ -48,6 +76,14 @@ namespace FAST.Core
         }
 
 
+        /// <summary>
+        /// Try to get an object of type T from a dictionary by its name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="TempData"></param>
+        /// <param name="variableName"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public static bool tryToGetObjectByNameFromDictionary<T>(IDictionary<string, object> TempData, string variableName,out T model)
         {
             model = default(T);
@@ -75,6 +111,13 @@ namespace FAST.Core
 
 
         // (v) add 31/12/2019
+        /// <summary>
+        /// Convert an array of dictionaries to a list of dictionaries
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dictionaries"></param>
+        /// <returns></returns>
         public static List<Dictionary<TKey, TValue>> toListOfDictionaries<TKey, TValue>(params Dictionary<TKey, TValue>[] dictionaries)
         {
             return dictionaries.ToList();
@@ -127,11 +170,7 @@ namespace FAST.Core
         }
 
     }
-
-
     
-    // (!)     05/08/2022   generics class anyType<T> moved from FAST.Core.genericsHelper to FAST.Types 
-
 
 
 }
