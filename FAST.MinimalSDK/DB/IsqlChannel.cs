@@ -80,6 +80,7 @@ namespace FAST.DB
         /// <summary>
         /// Clone the current channel to a new channel instance
         /// </summary>
+        /// <example>channel.cloneToNewChannel() as sqlChannel</example>
         /// <returns></returns>
         IsqlChannelElementary cloneToNewChannel();
 
