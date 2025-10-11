@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/aafent/FAST.SDK</RepositoryUrl>
     <PackageId>FAST.MinimalSDK</PackageId>
 	<PackageOutputPath>.\Packages</PackageOutputPath>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
 	<Authors>GCS</Authors>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
