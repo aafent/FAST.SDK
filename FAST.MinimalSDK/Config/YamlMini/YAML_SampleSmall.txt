@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+- Mark McGwire
+- Sammy Sosa
+- Ken Griffey
+---
+hr : 65    # Home runs
+av,g: 0.278 # Batting average
+r, bi: 147   # Runs Batted In
+---
+connections:
+ ventus: DSN=VENTUS_RELATIONAL;Uid=ventus;Pwd=marika111!234;database=VENTUS
+ Relational_Production: Driver={Adaptive Server Enterprise};NA=192.168.10.19,5000;Uid=ventus;Pwd=marika!234;database=VENTUS;EncryptPassword=2;ServerInitiatedTransactions=0;AnsiNull=0
+---
+american:
+  - Boston Red Sox
+  - Detroit Tigers
+  - New York Yankees
+national:
+  - New York Mets
+  - Chicago Cubs
+  - Atlanta Braves
+---

@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/aafent/FAST.SDK</RepositoryUrl>
     <PackageId>FAST.MinimalSDK</PackageId>
 	<PackageOutputPath>.\Packages</PackageOutputPath>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
 	<Authors>GCS</Authors>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
@@ -20,6 +20,10 @@
 		<PackagePath>\</PackagePath>
 		<Pack>True</Pack>
 	</None>
+</ItemGroup>
+
+<ItemGroup>
+  <None Include="Config\YamlMini\YamlMini.csproj" />
 </ItemGroup>
 
 
