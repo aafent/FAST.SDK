@@ -12,6 +12,7 @@
 	<PackageOutputPath>.\Packages</PackageOutputPath>
     <Version>1.0.1</Version>
 	<Authors>GCS</Authors>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
 <ItemGroup>

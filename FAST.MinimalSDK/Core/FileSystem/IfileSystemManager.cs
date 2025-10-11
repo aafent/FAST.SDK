@@ -3,6 +3,10 @@ using System.Text;
 
 namespace FAST.Core.FileSystem
 {
+
+    /// <summary>
+    /// Interface for managing file system operations.
+    /// </summary>
     public interface IfileSystemManager
     {
         string applicationPathToRealPath(string applicationPath);
