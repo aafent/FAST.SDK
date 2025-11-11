@@ -19,7 +19,7 @@ namespace FAST.Strings
         }
 
         /// <summary>
-        /// An implemetation of string split using regex expresion
+        /// An implementation of string split using regex expression
         /// </summary>
         /// <param name="expression"></param>
         /// <param name="input"></param>
