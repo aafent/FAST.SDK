@@ -3,12 +3,12 @@
 namespace FAST.Data
 {
     /// <summary>
-    /// Extentions of IDataRecord.
+    /// Extensions of IDataRecord.
     /// </summary>
-    public static class IDataRecord_nullSafeGetterExtentions
+    public static class IDataRecord_nullSafeGetterExtensions
     {
         /// <summary>
-        /// Get Value or a Defult
+        /// Get Value or a Default
         /// </summary>
         /// <param name="row">The IDataRecord</param>
         /// <param name="fieldName">The field name</param>
@@ -20,7 +20,7 @@ namespace FAST.Data
         }
 
         /// <summary>
-        /// Get Value or a Defult
+        /// Get Value or a Default
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="row">The IDataRecord</param>

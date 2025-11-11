@@ -33,7 +33,7 @@ namespace FAST.Data
         /// Add an identifier/mapping-command to the add-ons
         /// </summary>
         /// <param name="name">The name identifier</param>
-        /// <param name="addOnMethod">The delegate, string is the arguments to the mehtods, object is the input value and returns an object with the output value</param>
+        /// <param name="addOnMethod">The delegate, string is the arguments to the methods, object is the input value and returns an object with the output value</param>
         public void add(string name, Func<string,object,object> addOnMethod)
         {
             if (addOns==null) addOns=new();
@@ -104,8 +104,6 @@ namespace FAST.Data
         /// Parse the expression, 
         /// the passed metadata are stored in the options class
         /// </summary>
-        /// <typeparam name="T">The type of the value to be mapped</typeparam>
-        /// <param name="currentDirection">The current directions, can be incoming or outgoing</param>
         /// <param name="options">The mapping options</param>
         /// <param name="definitionDirection">The definition of the directions of the mapping expression</param>
         /// <param name="mappingExpression">The definition of the mapping expression</param>
