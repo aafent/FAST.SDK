@@ -3,6 +3,8 @@
     public interface IfileSystemEntityModel
     {
         string comments { get; set; }
+
+        [toDo("Rename to Context")]
         string contex { get; set; }
         string CurrentPath { get; set; }
         string DownloadPath { get; set; }
